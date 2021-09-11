@@ -85,25 +85,9 @@ function Header(props) {
 
                         <Button component={Link} variant="text" to="/" className={classes.link}>
 
-                            Upgrad Labs
+                            Doctor Finder
                         </Button>
                     </Typography>
-
-
-                    <nav>
-
-                        {menusToBeDisplayed.map((item, index) => {
-                            return (
-                                <Button key={index} component={Link} variant="text" color="primary" to={item.url}
-                                        className={item.menuClassName}>
-                                    {item.label}
-                                </Button>);
-
-
-                        })}
-
-
-                    </nav>
 
 
                     {(isLoggedIn) ?
@@ -114,10 +98,7 @@ function Header(props) {
                                     className={classes.link}>
                                 Login
                             </Button>
-                            <Button component={Link} to="/register" color="primary" variant="outlined"
-                                    className={classes.link}>
-                                Register for test
-                            </Button></div>
+                           </div>
                     }
                 </Toolbar>
             </AppBar>

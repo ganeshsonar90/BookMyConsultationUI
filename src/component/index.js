@@ -35,7 +35,7 @@ import {BrowserRouter as Router, Link, Route, Switch, useHistory} from "react-ro
 
 import ls from 'local-storage'
 
-import UINavBar from "./Navbar"
+import Header from "../common/header/Header";
 //import UICopyright from "./Copyright"
 import {useDispatch, useSelector} from "react-redux"
 
@@ -53,7 +53,7 @@ export {
     FormLabel,
     Switch,
     Route,
-    UINavBar,
+    Header,
     Checkbox,
     TextField,
     Container,
