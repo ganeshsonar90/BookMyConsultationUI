@@ -20,12 +20,20 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         borderBottom: `3px solid ${theme.palette.divider}`,
+        backgroundColor:"#800080",
+        height:"70px",
+        padding:"11px"
     },
     toolbar: {
         flexWrap: 'wrap',
     },
     toolbarTitle: {
         flexGrow: 1,
+        color:"#ffffff"
+    },
+    logo: {
+        backgroundColor:"#ff7f7f",
+        height:"35px"
     },
     link: {
         margin: theme.spacing(1, 1.5),
@@ -78,23 +86,19 @@ function Header(props) {
             <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
 
-                    <img src={app_logo} height="30" alt="Upgrad"/>
+                    <img src={app_logo}  alt="Doctor Finder" className={classes.logo}/>
 
-                    <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                    <Typography variant="h6"  noWrap className={classes.toolbarTitle}>
                         &nbsp;
-
-                        <Button component={Link} variant="text" to="/" className={classes.link}>
-
-                            Doctor Finder
-                        </Button>
+                        Doctor Finder
                     </Typography>
 
 
                     {(isLoggedIn) ?
-                        <Button id="btnlogout" onClick={logout} color="secondary" variant="outlined" className={classes.link}>
+                        <Button id="btnlogout" onClick={logout} color="secondary" variant="contained" className={classes.link}>
                             Logout
                         </Button> : <div>
-                            <Button component={Link} to="/login" color="secondary" variant="outlined"
+                            <Button component={Link} to="/authentication" color="primary" variant="contained"
                                     className={classes.link}>
                                 Login
                             </Button>

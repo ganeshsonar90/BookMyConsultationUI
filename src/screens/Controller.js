@@ -6,6 +6,7 @@ import LoadingIndicatorComponent from "../common/loader/loading-indicator-compon
 import AppNotificationComponent from "../common/notification/app-notification-component";
 
 import {Switch} from "../component/index"
+import Authentication from "./authentication/Authentication";
 
 const Controller = () => {
   const baseUrl = "/api/v1/";
@@ -21,6 +22,10 @@ const Controller = () => {
           path="/"
           render={(props) => <Home {...props} baseUrl={baseUrl} />}
         />
+
+            <Route path="/authentication">
+                <Authentication />
+            </Route>
 
 
         </Switch>
