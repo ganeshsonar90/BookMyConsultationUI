@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import app_logo from "../../assets/logo.jpeg"
 import {useLocation} from 'react-router-dom';
 import {doLogout} from "../../auth/authDispatcher";
+import AuthenticationDialog from "../../screens/authentication/AuthenticationDialog";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +77,21 @@ function Header(props) {
 
     const currentPath =location.pathname
 
+    //Dialog
+    const [open, setOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState("");
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+       // setSelectedValue(value);
+    };
+
+    //
+
 
 
 
@@ -98,10 +114,10 @@ function Header(props) {
                         <Button id="btnlogout" onClick={logout} color="secondary" variant="contained" className={classes.link}>
                             Logout
                         </Button> : <div>
-                            <Button component={Link} to="/authentication" color="primary" variant="contained"
-                                    className={classes.link}>
+                            <Button  color="primary" variant="contained" onClick={ handleClickOpen}>
                                 Login
                             </Button>
+                            <AuthenticationDialog open={open} onClose={handleClose} />
                            </div>
                     }
                 </Toolbar>
