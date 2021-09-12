@@ -20,6 +20,7 @@ import {environment} from "../../environment";
 import {clearAuthToken, doLogin} from "../../auth/authDispatcher";
 import {LOGIN} from "../../auth/authStore";
 import {appNotification} from "../../common/notification/app-notification";
+import validator from 'validator';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -61,6 +62,17 @@ function Login(props) {
     async function login(event) {
         event.preventDefault();
         console.log("userName",userName)
+
+        if (userName==="" || password===""){
+            appNotification.showError("Please fill out this field")
+            return;
+        }
+
+        if (!validator.isEmail(userName)){
+            appNotification.showError("Enter valid Email")
+            return;
+        }
+
         const payload = {
             userName,
             password

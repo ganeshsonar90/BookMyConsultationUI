@@ -22,9 +22,7 @@ import {appNotification} from "../../common/notification/app-notification";
 import {  doRegisterUser} from "../../auth/authDispatcher";
 import {LOGIN} from "../../auth/authStore";
 import {useDispatch} from "react-redux";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import {getAsFormatted} from "../../util/date-helpers";
+import validator from "validator";
 
 
 
@@ -63,42 +61,17 @@ function Register() {
     const [error_message, set_error_message] = React.useState(false);
 
 
-    const [userName, setUserName] = useState('user');
-    const [firstName, setFirstName] = useState('user');
-    const [lastName, setLastName] = useState('uslast');
-    const [email, setEmail] = useState('user@upgrad.com');
-    const [dateOfBirth, setDateOfBirth] = useState('1981-11-21');
-    const [password, setPassword] = useState('password');
-    const [confirmPassword, setConfirmPassword] = useState('password');
-    const [address, setAddress] = useState('some address ,some day');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    const [pinCode, setPinCode] = useState('45787878');
     const [role, setRole] = useState("USER");
-    const [phoneNumber,setPhoneNumber] = useState("45454545");
-    const [gender, setGender] = useState("MALE");
-    const [isAgreed, setIsAgreed] = useState(false);
-
-    //
-    // const [userName, setUserName] = useState('');
-    // const [firstName, setFirstName] = useState('');
-    //const [confirmPassword, setConfirmPassword] = useState('');
-    // const [lastName, setLastName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [address, setAddress] = useState('');
-    //
-    // const [pinCode, setPinCode] = useState('');
-    // const [userRole, setRole] = useState("");
-    // const [phoneNumber,setPhoneNumber] = useState("");
-    // const [gender, setGender] = useState("MALE");
-
-
+    const [phoneNumber,setPhoneNumber] = useState("");
 
     function getRoles (input){
 
         const isUser = (input === "USER")
-
-
 
         return {isUser}
     }
@@ -111,7 +84,6 @@ function Register() {
                 callback(response)
 
             }, (error => {
-
 
                 appNotification.showError(error)
             }))
@@ -133,17 +105,19 @@ function Register() {
 
     }
 
-
-    function onUserTypeChanged(evt,role){
-        if(evt.target.checked)
-            setRole(role)
-
-    }
     function handleSubmit(event) {
         event.preventDefault();
 
 
+        if (firstName==="" ||lastName===""||email==="" || password===""||phoneNumber===""){
+            appNotification.showError("Please fill out this field")
+            return;
+        }
 
+        if (!validator.isEmail(email)){
+            appNotification.showError("Enter valid Email")
+            return;
+        }
 
 
         const payload = {
@@ -151,34 +125,14 @@ function Register() {
             lastName,
             email,
             password,
-            confirmPassword,
-            dateOfBirth:getAsFormatted(new Date(dateOfBirth)),
-            address,
-            pinCode,
-            userName,
-            phoneNumber,
-            gender
+            phoneNumber
         }
 
+       // let  {isUser} = getRoles(role)
 
 
-        if(!isAgreed ){
-
-            appNotification.showError("Please agree the terms and conditions")
-            return;
-        }
-        if(confirmPassword !== password){
-
-            appNotification.showError("Passwords Mismatch")
-            return;
-        }
-        let  {isUser} = getRoles(role)
-
-
-        if(isUser)
+       // if(isUser)
             registerUser(payload);
-
-
 
     }
 
@@ -188,34 +142,12 @@ function Register() {
 
                 <div className={classes.paper}>
 
-                    <Typography component="h1" variant="h5">
-                        Register to take Laboratory Tests.
-                        <hr />
-                    </Typography>
-
 
                     <form className={classes.form} onSubmit={handleSubmit} noValidate>
 
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={12}>
-                                <FormControl component="fieldset">
-                                    <FormLabel component="legend">Select Role to Register</FormLabel>
-                                    <RadioGroup
-                                        row
-                                        aria-label="userRole"
-                                        name="userRole"
-                                        id="userroleDetail"
-                                        value={role}
-                                        >
 
-
-                                        <FormControlLabel value="USER" control={<Radio  onChange={e => onUserTypeChanged(e,"USER")}  />} label="Patient" />
-                                        <FormControlLabel value="TESTER" control={<Radio onChange={e => onUserTypeChanged(e,"TESTER")} />} label="Tester" />
-                                        <FormControlLabel value="DOCTOR" control={<Radio onChange={e => onUserTypeChanged(e,"DOCTOR")} />} label="Doctor" />
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} >
                                 <TextField
                                     name="firstName"
                                     value={firstName}
@@ -228,7 +160,7 @@ function Register() {
                                     autoFocus
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
                                     value={lastName}
@@ -242,61 +174,20 @@ function Register() {
                                 />
                             </Grid>
 
-                            <Grid item xs={12} sm={4}>
-
-
-                                <FormControl variant="outlined" className={classes.formControl}>
-                                    <InputLabel htmlFor="outlined-gender-native-simple">Gender</InputLabel>
-                                    <Select
-                                        native
-                                        value={gender}
-                                        onChange={e => {
-
-                                            setGender(e.target.value)
-                                        }}
-                                        label="Gender"
-                                        inputProps={{
-                                            name: 'gender',
-                                            id: 'outlined-gender-native-simple',
-                                        }}
-                                    >
-                                        <option value="FEMALE">Female</option>
-                                        <option value="MALE">Male</option>
-                                        <option value="OTHER">Other</option>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-
-
-
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
-                                    value={dateOfBirth}
-                                    onInput={e => setDateOfBirth(e.target.value)}
+                                    value={email}
+                                    onInput={e => setEmail(e.target.value)}
                                     required
                                     fullWidth
-                                    id="dateOfBirth"
-                                    label="Date of Birth"
-                                    name="dateOfBirth"
-                                    type="date"
-                                    autoComplete="dateOfBirth"
+                                    id="email"
+                                    label="Email Id"
+                                    name="email"
+                                    autoComplete="email"
                                 />
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    value={userName}
-                                    onInput={e => setUserName(e.target.value)}
-                                    required
-                                    fullWidth
-                                    id="userName"
-                                    label="User Name"
-                                    name="userName"
-                                    autoComplete="userName"
-                                />
-                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
@@ -314,34 +205,6 @@ function Register() {
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
-                                    value={confirmPassword}
-                                    onInput={e => setConfirmPassword(e.target.value)}
-                                    required
-                                    fullWidth
-                                    name="confirmPassword"
-                                    label="Confirm Password"
-                                    type="password"
-                                    id="confirmPassword"
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    value={email}
-                                    onInput={e => setEmail(e.target.value)}
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
                                     value={phoneNumber}
                                     onInput={e => setPhoneNumber(e.target.value)}
                                     required
@@ -352,59 +215,18 @@ function Register() {
                                     id="mobile"
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    value={address}
-                                    onInput={e => setAddress(e.target.value)}
-                                    required
-                                    fullWidth
-                                    name="address"
-                                    label="Address"
-                                    type="text"
-                                    id="address"
-                                />
-                            </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    value={pinCode}
-                                    onInput={e => setPinCode(e.target.value)}
-                                    required
-                                    fullWidth
-                                    name="pinCode"
-                                    label="Pincode"
-                                    type="text"
-                                    id="pinCode"
-                                />
                             </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    id="agreecondition"
-                                    control={<Checkbox checked={isAgreed} onChange={e => {
-                                        setIsAgreed(e.target.checked)
-                                    }} value="allowExtraEmails" color="primary" />}
-                                    label="I agree to abide by all government regulation."
-                                />
-                            </Grid>
-                        </Grid>
+                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                         <Button
                             type="submit"
-                            fullWidth
                             variant="contained"
                             color="primary"
                             className={classes.submit}
                         >
                             Register
           </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link to="/login" variant="body2">
-                                    Already have an account? Sign in
-              </Link>
-                            </Grid>
-                        </Grid>
+                        </div>
                     </form>
                 </div>
 
