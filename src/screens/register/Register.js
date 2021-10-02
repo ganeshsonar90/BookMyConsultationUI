@@ -63,11 +63,11 @@ function Register() {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
+    const [emailId, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [role, setRole] = useState("USER");
-    const [phoneNumber,setPhoneNumber] = useState("");
+    const [mobile,setPhoneNumber] = useState("");
 
     function getRoles (input){
 
@@ -94,12 +94,12 @@ function Register() {
 
         callObservable(doRegisterUser(payload),(response)=>{
 
-            const currentUser = response.user
-            const token = response.token
+            //const currentUser = response.user
+            //const token = response.token
 
             appNotification.showSuccess("Succesfully Registered")
             dispatch({type: LOGIN, "payload": response});
-            history.push("/profile")
+           // history.push("/profile")
 
         })
 
@@ -109,23 +109,25 @@ function Register() {
         event.preventDefault();
 
 
-        if (firstName==="" ||lastName===""||email==="" || password===""||phoneNumber===""){
+        if (firstName==="" ||lastName===""||emailId==="" || password===""||mobile===""){
             appNotification.showError("Please fill out this field")
             return;
         }
 
-        if (!validator.isEmail(email)){
+        if (!validator.isEmail(emailId)){
             appNotification.showError("Enter valid Email")
             return;
         }
+
+        console.log("Before register api" , "register")
 
 
         const payload = {
             firstName,
             lastName,
-            email,
+            emailId,
             password,
-            phoneNumber
+            mobile
         }
 
        // let  {isUser} = getRoles(role)
@@ -177,13 +179,13 @@ function Register() {
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
-                                    value={email}
+                                    value={emailId}
                                     onInput={e => setEmail(e.target.value)}
                                     required
                                     fullWidth
-                                    id="email"
+                                    id="emailId"
                                     label="Email Id"
-                                    name="email"
+                                    name="emailId"
                                     autoComplete="email"
                                 />
                             </Grid>
@@ -205,7 +207,7 @@ function Register() {
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
-                                    value={phoneNumber}
+                                    value={mobile}
                                     onInput={e => setPhoneNumber(e.target.value)}
                                     required
                                     fullWidth

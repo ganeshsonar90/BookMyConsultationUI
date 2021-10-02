@@ -8,10 +8,9 @@ import {environment} from "../environment";
 export const doLogin = (loginRequest) => {
 
     clearAuthToken();
-    return getToken(loginRequest)
-        .pipe(
-            concatMap((token) => getMyDetailsWithToken(token)),
-        );
+    setEmailPasswordToken(loginRequest)
+
+    return getToken(loginRequest);
 
 
 }
@@ -24,25 +23,26 @@ export const getToken = (loginRequest) => {
     return http.post(url, loginRequest)
         .pipe(
             map((response) => {
+                setAuthToken( response.accessToken);
 
+                return response;
 
-                return response.token;
             })
         );
 }
 export const doRegisterUser = (registerRequest) => {
 
-    const url = environment.baseUrl + '/auth/register';
+    const url = environment.baseUrl + '/users/register';
 
     return http.post(url, registerRequest)
         .pipe(
             concatMap((response) => {
 
-
                 const loginRequest = {};
-                loginRequest.userName = registerRequest.userName;
+                loginRequest.userName = registerRequest.emailId;
                 loginRequest.password = registerRequest.password;
                 return doLogin(loginRequest);
+               // return "token";
             })
         );
 }
@@ -82,13 +82,31 @@ export const clearAuthToken = () => {
     http.setToken(null)
 }
 
+export const setEmailPasswordToken = (loginRequest) => {
+    const token = window.btoa(`${loginRequest.userName}:${loginRequest.password}`);
+    http.setTokenLogin(token)
+}
+
 export const doLogout = (dispatch,history) => {
 
 
-    dispatch({type: LOGOUT});
-    setAuthToken(null)
-    localStorage.clear()
-    history.push("/")
+    const url = environment.baseUrl + '/auth/logout';
+
+    return http.post(url)
+        .pipe(
+            map((response) => {
+
+
+                console.log("logout click response","logout response")
+                setAuthToken(null)
+                localStorage.clear()
+
+            })
+        );
+
+
+
+
 
 
 }

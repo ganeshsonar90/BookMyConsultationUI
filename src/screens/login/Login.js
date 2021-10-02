@@ -85,15 +85,20 @@ function Login(props) {
         doLogin( payload)
             .subscribe( (response) =>{
 
-                const currentUser = response.user
-                const token = response.token
+              //  const currentUser = response.user
+                //const token = response.token
+
+                console.log("Login result token" , response.accessToken)
+                console.log("Login result firstName" , response.firstName)
 
 
                 dispatch({type: LOGIN,"payload":response});
 
 
 
-                    history.push("/profile")
+                 //   history.push("/profile")
+
+                appNotification.showSuccess("Sucessfully Login");
 
 
             },(error => {

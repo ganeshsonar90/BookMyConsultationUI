@@ -16,6 +16,17 @@ function setToken(token) {
 }
 
 
+function setTokenLogin(token) {
+
+    if (token){
+        console.log("setting token Login" , token)
+        axios.defaults.headers.common['Authorization'] = `Basic ${token}`;
+    }
+   // else
+        //axios.defaults.headers.common['Authorization'] = null
+}
+
+
 axios.interceptors.request.use(req => {
      console.log(`${req.method} ${req.url}`);
 
@@ -31,10 +42,12 @@ function makeAsObservable(request) {
     return new Observable((observer) => {
         loadingIndicator.show();
         console.log("going  for",request.url)
+        console.log("received for request",request.data)
         axios(request)
             .then((response) => {
                 loadingIndicator.hide();
                 console.log("received for",request.url)
+
                 observer.next(response.data);
                 observer.complete();
             })
@@ -90,7 +103,7 @@ function deleteRequest(url) {
 
 }
 
-export default {setToken, delete: deleteRequest, put, get, post};
+export default {setTokenLogin,setToken, delete: deleteRequest, put, get, post};
 // export default function cube() {
 //     return {setToken, delete: deleteRequest, put, get, post};
 // };

@@ -13,10 +13,12 @@ const getDefaultRoles =()=>{
 export const getApplicableRoles =(user)=>{
 
 
-    const isApproved = (user.status === "APPROVED")
+    const isApproved =true;
+   // const isApproved = (user.status === "APPROVED")
 
-    let role = user.role;
-    const isUser = (role === "USER")
+    //let role = user.role;
+    const isUser = true;
+   // const isUser = (role === "USER")
 
 
 
@@ -34,9 +36,9 @@ export const initialState = {
 const loginUser =(state,action)=>{
 
     let updatedState = {}
-    if(action?.payload?.user){
-        const roles =getApplicableRoles(action.payload.user)
-        updatedState={isLoggedIn:true,token:action.payload.token,user:action.payload.user,roles}
+    if(action?.payload){
+        const roles =getApplicableRoles(action.payload)
+        updatedState={isLoggedIn:true,token:action.payload.accessToken,user:action.payload,roles}
     }
     return { ...state,...updatedState}
 
@@ -44,6 +46,8 @@ const loginUser =(state,action)=>{
 
 };
 const logOutUser =(state,action)=>{
+
+    console.log("logOutUser reducer","logout reducer")
 
     return { ...state,isLoggedIn:false,token:null,user:null,roles:getDefaultRoles()}
 

@@ -3,8 +3,10 @@ from "../../component/index"
 import {makeStyles} from '@material-ui/core/styles';
 import app_logo from "../../assets/logo.jpeg"
 import {useLocation} from 'react-router-dom';
-import {doLogout} from "../../auth/authDispatcher";
+import {doLogout, setAuthToken} from "../../auth/authDispatcher";
 import AuthenticationDialog from "../../screens/authentication/AuthenticationDialog";
+import {LOGIN, LOGOUT} from "../../auth/authStore";
+import {appNotification} from "../notification/app-notification";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,12 +62,28 @@ function Header(props) {
     const history = useHistory();
     const location =useLocation();
 
-    function logout() {
+   async function logout() {
 
-        doLogout(dispatch, history)
+       console.log("logout click","logout")
+       doLogout(dispatch, history)
+           .subscribe((response) => {
+
+               console.log("logout click fallback","logout fallback")
+               dispatch({type: LOGOUT});
+
+               history.push("/")
+
+               appNotification.showSuccess("Sucessfully Logout");
 
 
-    }
+           }, (error => {
+               appNotification.showError(error)
+
+
+           }))
+
+   }
+
 
     const classes = useStyles();
     const {user, token, isLoggedIn, roles} = useSelector(state => state.auth);
