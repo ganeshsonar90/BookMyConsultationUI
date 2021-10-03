@@ -4,9 +4,7 @@ import validator from "validator";
 import {environment} from "../../environment";
 import {getDoctorsApi} from "../../auth/authDispatcher";
 import Paper from '@material-ui/core/Paper';
-import Rating from '@material-ui/core';
-import StarRating from 'react-star-rating'
-
+import {Rating} from 'react-simple-star-rating'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -21,9 +19,10 @@ const useStyles = makeStyles((theme) => ({
 
     },
     paper_theme: {
+        width:450,
         marginTop:theme.spacing(2),
+        padding:theme.spacing(3),
         height:180,
-        justifyContent: 'center',
         alignItems: 'center',
     },
 
@@ -143,9 +142,21 @@ function DoctorList(props) {
                                     </Grid>
                                     <Grid item xs={8}>
 
-                                       {/* <Rating name="read-only" value={item.rating} readOnly />*/}
 
+                                        <Rating
+
+                                            ratingValue={item.rating}
+                                            size={20}
+                                            label
+                                            transition
+                                            fillColor='orange'
+                                            emptyColor='gray'
+                                            className='foo'
+
+                                        />
+{/*
                                         <StarRating name="react-star-rating" editing={false} totalStars={item.rating} />
+*/}
 
                                     </Grid>
 
