@@ -50,25 +50,23 @@ export const doRegisterUser = (registerRequest) => {
 
 
 
-const getMyDetailsWithToken = (token) => {
+export const getDoctorsApi = (speciality) => {
 
-
-    const url = environment.baseUrl + '/users/details';
-    setAuthToken(token)
+//doctors?speciality=CARDIOLOGIST
+    const url = environment.baseUrl + '/doctors?speciality='+speciality;
+   // setAuthToken(token)
 
     return http.get(url).pipe(
-        map((userObject) => {
-
-            const authInfo = {}
-            authInfo.token = token;
-            authInfo.user = getAsUser(userObject);
-            return authInfo;
+        map((response) => {
+            return response;
 
         })
     );
 
 
 }
+
+
 
 
 
