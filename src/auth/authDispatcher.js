@@ -66,6 +66,21 @@ export const getDoctorsApi = (speciality) => {
 
 }
 
+export const getSpecialityApi = () => {
+
+    const url = environment.baseUrl + '/doctors/speciality';
+   // setAuthToken(token)
+
+    return http.get(url).pipe(
+        map((response) => {
+            return response;
+
+        })
+    );
+
+
+}
+
 
 
 
