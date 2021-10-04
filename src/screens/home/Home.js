@@ -23,15 +23,15 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function Home(props){
+function Home(props) {
 
     const classes = useStyles();
 
 
-    return( <React.Fragment>
+    return (<React.Fragment>
 
-        <div >
-            <HomeFullWidthTabs className={classes.toolbar} >
+        <div>
+            <HomeFullWidthTabs className={classes.toolbar}>
 
             </HomeFullWidthTabs>
 
@@ -40,4 +40,5 @@ function Home(props){
     </React.Fragment>)
 
 }
+
 export default Home

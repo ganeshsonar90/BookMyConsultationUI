@@ -1,9 +1,6 @@
-import {Button, makeStyles, React, Typography, useEffect, useState, Grid, Container} from "../../component";
+import {Button, Container, Grid, makeStyles, React, Typography, useEffect, useState} from "../../component";
 import {appNotification} from "../../common/notification/app-notification";
-import validator from "validator";
-import {environment} from "../../environment";
-import {getDoctorsApi} from "../../auth/authDispatcher";
-import {getSpecialityApi} from "../../auth/authDispatcher";
+import {getDoctorsApi, getSpecialityApi} from "../../auth/authDispatcher";
 import Paper from '@material-ui/core/Paper';
 import {Rating} from 'react-simple-star-rating';
 import Select from 'react-select';

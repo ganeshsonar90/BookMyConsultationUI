@@ -1,29 +1,9 @@
-import {
-    Button,
-    Checkbox,
-    Container,
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    Grid,
-    Link,
-    makeStyles,
-    MuiAlert,
-    Radio,
-    RadioGroup,
-    React,
-    Snackbar,
-    TextField,
-    Typography,
-    useHistory,
-    useState
-} from "../../component/index"
+import {Button, Container, Grid, makeStyles, React, TextField, useHistory, useState} from "../../component/index"
 import {appNotification} from "../../common/notification/app-notification";
-import {  doRegisterUser} from "../../auth/authDispatcher";
+import {doRegisterUser} from "../../auth/authDispatcher";
 import {LOGIN} from "../../auth/authStore";
 import {useDispatch} from "react-redux";
 import validator from "validator";
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
 
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
-        },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
 
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -67,16 +47,16 @@ function Register() {
     const [password, setPassword] = useState('');
 
     const [role, setRole] = useState("USER");
-    const [mobile,setPhoneNumber] = useState("");
+    const [mobile, setPhoneNumber] = useState("");
 
-    function getRoles (input){
+    function getRoles(input) {
 
         const isUser = (input === "USER")
 
         return {isUser}
     }
 
-    function callObservable(subscriberMethod,callback) {
+    function callObservable(subscriberMethod, callback) {
 
         subscriberMethod
             .subscribe((response) => {
@@ -89,17 +69,18 @@ function Register() {
             }))
 
     }
+
     function registerUser(payload) {
 
 
-        callObservable(doRegisterUser(payload),(response)=>{
+        callObservable(doRegisterUser(payload), (response) => {
 
             //const currentUser = response.user
             //const token = response.token
 
             appNotification.showSuccess("Succesfully Registered")
             dispatch({type: LOGIN, "payload": response});
-           // history.push("/profile")
+            // history.push("/profile")
 
         })
 
@@ -109,17 +90,17 @@ function Register() {
         event.preventDefault();
 
 
-        if (firstName==="" ||lastName===""||emailId==="" || password===""||mobile===""){
+        if (firstName === "" || lastName === "" || emailId === "" || password === "" || mobile === "") {
             appNotification.showError("Please fill out this field")
             return;
         }
 
-        if (!validator.isEmail(emailId)){
+        if (!validator.isEmail(emailId)) {
             appNotification.showError("Enter valid Email")
             return;
         }
 
-        console.log("Before register api" , "register")
+        console.log("Before register api", "register")
 
 
         const payload = {
@@ -130,11 +111,11 @@ function Register() {
             mobile
         }
 
-       // let  {isUser} = getRoles(role)
+        // let  {isUser} = getRoles(role)
 
 
-       // if(isUser)
-            registerUser(payload);
+        // if(isUser)
+        registerUser(payload);
 
     }
 
@@ -149,7 +130,7 @@ function Register() {
 
                         <Grid container spacing={2}>
 
-                            <Grid item xs={12} >
+                            <Grid item xs={12}>
                                 <TextField
                                     name="firstName"
                                     value={firstName}
@@ -218,16 +199,16 @@ function Register() {
                                 />
                             </Grid>
 
-                            </Grid>
-                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Register
-          </Button>
+                        </Grid>
+                        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Register
+                            </Button>
                         </div>
                     </form>
                 </div>

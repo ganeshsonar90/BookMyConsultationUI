@@ -1,8 +1,5 @@
-import {React,makeStyles,Container}
-    from "../../component/index";
+import {makeStyles, React} from "../../component/index";
 import {useHistory} from "react-router-dom";
-import  {useState} from 'react';
-import {Typography} from "@material-ui/core";
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PropTypes from 'prop-types';
@@ -27,25 +24,25 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#800080",
     },
 }));
+
 function AuthenticationDialog(props) {
 
     const history = useHistory();
 
-   // const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const classes = useStyles();
-    const { onClose, open } = props;
+    const {onClose, open} = props;
 
     const handleClose = () => {
         onClose();
     };
 
 
-
     return (
         <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <DialogTitle id="simple-dialog-title" className={classes.dialog_tilte}>Authentication</DialogTitle>
-<FullWidthTabs></FullWidthTabs>
+            <FullWidthTabs></FullWidthTabs>
         </Dialog>
 
     );

@@ -1,23 +1,9 @@
-import {
-    Button,
-    Checkbox,
-    Container,
-    CssBaseline,
-    FormControlLabel,
-    Grid,
-    Link,
-    makeStyles,
-    TextField,
-    Typography
-} from "../../component/index"
+import {Button, Container, makeStyles, TextField} from "../../component/index"
 import {useHistory} from "react-router-dom";
-
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-
-
 import {environment} from "../../environment";
-import {clearAuthToken, doLogin} from "../../auth/authDispatcher";
+import {doLogin} from "../../auth/authDispatcher";
 import {LOGIN} from "../../auth/authStore";
 import {appNotification} from "../../common/notification/app-notification";
 import validator from 'validator';
@@ -54,21 +40,16 @@ function Login(props) {
     const [password, set_password] = useState("")
 
 
-
-
-
-
-
     async function login(event) {
         event.preventDefault();
-        console.log("userName",userName)
+        console.log("userName", userName)
 
-        if (userName==="" || password===""){
+        if (userName === "" || password === "") {
             appNotification.showError("Please fill out this field")
             return;
         }
 
-        if (!validator.isEmail(userName)){
+        if (!validator.isEmail(userName)) {
             appNotification.showError("Enter valid Email")
             return;
         }
@@ -79,30 +60,29 @@ function Login(props) {
         }
 
 
-        const loginUrl = environment.baseUrl +"/auth/login"
+        const loginUrl = environment.baseUrl + "/auth/login"
 
 
-        doLogin( payload)
-            .subscribe( (response) =>{
+        doLogin(payload)
+            .subscribe((response) => {
 
-              //  const currentUser = response.user
+                //  const currentUser = response.user
                 //const token = response.token
 
-                console.log("Login result token" , response.accessToken)
-                console.log("Login result firstName" , response.firstName)
+                console.log("Login result token", response.accessToken)
+                console.log("Login result firstName", response.firstName)
 
 
-                dispatch({type: LOGIN,"payload":response});
+                dispatch({type: LOGIN, "payload": response});
 
 
-
-                 //   history.push("/profile")
+                //   history.push("/profile")
 
                 appNotification.showSuccess("Sucessfully Login");
 
 
-            },(error => {
-                appNotification.showError(error )
+            }, (error => {
+                appNotification.showError(error)
 
 
             }))
@@ -148,14 +128,14 @@ function Login(props) {
                             alignItems: "center"
                         }}
                     >
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        LOGIN
-            </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            LOGIN
+                        </Button>
 
                     </div>
 

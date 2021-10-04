@@ -1,10 +1,10 @@
 import {React, Typography} from "../../component";
 
 
-function Appointment(props){
+function Appointment(props) {
 
 
-    return( <React.Fragment>
+    return (<React.Fragment>
 
 
         <Typography>
@@ -15,4 +15,5 @@ function Appointment(props){
     </React.Fragment>)
 
 }
+
 export default Appointment

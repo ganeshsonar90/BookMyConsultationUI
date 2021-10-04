@@ -1,7 +1,5 @@
 import http from "../common/services/http-service.js";
 import {concatMap, map} from "rxjs/operators";
-import {LOGOUT} from "./authStore";
-import {getAsUser} from "./user";
 import {environment} from "../environment";
 
 
@@ -23,7 +21,7 @@ export const getToken = (loginRequest) => {
     return http.post(url, loginRequest)
         .pipe(
             map((response) => {
-                setAuthToken( response.accessToken);
+                setAuthToken(response.accessToken);
 
                 return response;
 
@@ -42,19 +40,17 @@ export const doRegisterUser = (registerRequest) => {
                 loginRequest.userName = registerRequest.emailId;
                 loginRequest.password = registerRequest.password;
                 return doLogin(loginRequest);
-               // return "token";
+                // return "token";
             })
         );
 }
 
 
-
-
 export const getDoctorsApi = (speciality) => {
 
 //doctors?speciality=CARDIOLOGIST
-    const url = environment.baseUrl + '/doctors?speciality='+speciality;
-   // setAuthToken(token)
+    const url = environment.baseUrl + '/doctors?speciality=' + speciality;
+    // setAuthToken(token)
 
     return http.get(url).pipe(
         map((response) => {
@@ -69,7 +65,7 @@ export const getDoctorsApi = (speciality) => {
 export const getSpecialityApi = () => {
 
     const url = environment.baseUrl + '/doctors/speciality';
-   // setAuthToken(token)
+    // setAuthToken(token)
 
     return http.get(url).pipe(
         map((response) => {
@@ -80,11 +76,6 @@ export const getSpecialityApi = () => {
 
 
 }
-
-
-
-
-
 
 
 export const setAuthToken = (token) => {
@@ -100,7 +91,7 @@ export const setEmailPasswordToken = (loginRequest) => {
     http.setTokenLogin(token)
 }
 
-export const doLogout = (dispatch,history) => {
+export const doLogout = (dispatch, history) => {
 
 
     const url = environment.baseUrl + '/auth/logout';
@@ -110,16 +101,12 @@ export const doLogout = (dispatch,history) => {
             map((response) => {
 
 
-                console.log("logout click response","logout response")
+                console.log("logout click response", "logout response")
                 setAuthToken(null)
                 localStorage.clear()
 
             })
         );
-
-
-
-
 
 
 }

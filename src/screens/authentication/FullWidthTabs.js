@@ -1,21 +1,15 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Header from "../../common/header/Header";
 import Login from "../../screens/login/Login";
-import Button from "@material-ui/core/Button";
-import CardContent from "@material-ui/core/CardContent";
 import Register from "../../screens/register/Register";
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
     return (
 
@@ -27,11 +21,11 @@ function TabPanel(props) {
             aria-labelledby={`full-width-tab-${index}`}
             {...other}
         >
-            { (index==0) ?  (
+            {(index == 0) ? (
 
                 <Login
                     baseUrl={props.baseUrl}/>
-            ) :(
+            ) : (
 
                 <Register
                     baseUrl={props.baseUrl}/>
@@ -58,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
         width: 500,
-        margin:15,
+        margin: 15,
 
     },
 }));

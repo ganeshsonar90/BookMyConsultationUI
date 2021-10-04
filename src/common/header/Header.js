@@ -1,5 +1,5 @@
 import {AppBar, Button, Link, React, Toolbar, Typography, useDispatch, useHistory, useSelector,}
-from "../../component/index"
+    from "../../component/index"
 import {makeStyles} from '@material-ui/core/styles';
 import app_logo from "../../assets/logo.jpeg"
 import {useLocation} from 'react-router-dom';
@@ -23,20 +23,20 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         borderBottom: `3px solid ${theme.palette.divider}`,
-        backgroundColor:"#800080",
-        height:"70px",
-        padding:"11px"
+        backgroundColor: "#800080",
+        height: "70px",
+        padding: "11px"
     },
     toolbar: {
         flexWrap: 'wrap',
     },
     toolbarTitle: {
         flexGrow: 1,
-        color:"#ffffff"
+        color: "#ffffff"
     },
     logo: {
-        backgroundColor:"#ff7f7f",
-        height:"35px"
+        backgroundColor: "#ff7f7f",
+        height: "35px"
     },
     link: {
         margin: theme.spacing(1, 1.5),
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             color: "#3f51b5",
             backgroundColor: "#ffffff",
-            border:'1px solid #3f51b5'
+            border: '1px solid #3f51b5'
         },
     },
 
@@ -60,29 +60,29 @@ function Header(props) {
 
     const dispatch = useDispatch()
     const history = useHistory();
-    const location =useLocation();
+    const location = useLocation();
 
-   async function logout() {
+    async function logout() {
 
-       console.log("logout click","logout")
-       doLogout(dispatch, history)
-           .subscribe((response) => {
+        console.log("logout click", "logout")
+        doLogout(dispatch, history)
+            .subscribe((response) => {
 
-               console.log("logout click fallback","logout fallback")
-               dispatch({type: LOGOUT});
+                console.log("logout click fallback", "logout fallback")
+                dispatch({type: LOGOUT});
 
-               history.push("/")
+                history.push("/")
 
-               appNotification.showSuccess("Sucessfully Logout");
-
-
-           }, (error => {
-               appNotification.showError(error)
+                appNotification.showSuccess("Sucessfully Logout");
 
 
-           }))
+            }, (error => {
+                appNotification.showError(error)
 
-   }
+
+            }))
+
+    }
 
 
     const classes = useStyles();
@@ -93,7 +93,7 @@ function Header(props) {
     const isNotLoggedIn = !isLoggedIn
 
 
-    const currentPath =location.pathname
+    const currentPath = location.pathname
 
     //Dialog
     const [open, setOpen] = React.useState(false);
@@ -105,13 +105,10 @@ function Header(props) {
 
     const handleClose = (value) => {
         setOpen(false);
-       // setSelectedValue(value);
+        // setSelectedValue(value);
     };
 
     //
-
-
-
 
 
     return (
@@ -120,23 +117,24 @@ function Header(props) {
             <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
 
-                    <img src={app_logo}  alt="Doctor Finder" className={classes.logo}/>
+                    <img src={app_logo} alt="Doctor Finder" className={classes.logo}/>
 
-                    <Typography variant="h6"  noWrap className={classes.toolbarTitle}>
+                    <Typography variant="h6" noWrap className={classes.toolbarTitle}>
                         &nbsp;
                         Doctor Finder
                     </Typography>
 
 
                     {(isLoggedIn) ?
-                        <Button id="btnlogout" onClick={logout} color="secondary" variant="contained" className={classes.link}>
+                        <Button id="btnlogout" onClick={logout} color="secondary" variant="contained"
+                                className={classes.link}>
                             Logout
                         </Button> : <div>
-                            <Button  color="primary" variant="contained" onClick={ handleClickOpen}>
+                            <Button color="primary" variant="contained" onClick={handleClickOpen}>
                                 Login
                             </Button>
-                            <AuthenticationDialog open={open} onClose={handleClose} />
-                           </div>
+                            <AuthenticationDialog open={open} onClose={handleClose}/>
+                        </div>
                     }
                 </Toolbar>
             </AppBar>

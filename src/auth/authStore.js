@@ -6,62 +6,54 @@ export const LOGIN = "auth/login";
 export const LOGOUT = "auth/logout";
 
 
-
-const getDefaultRoles =()=>{
-    return getApplicableRoles({role:"ANONYMOUS"})
+const getDefaultRoles = () => {
+    return getApplicableRoles({role: "ANONYMOUS"})
 }
-export const getApplicableRoles =(user)=>{
+export const getApplicableRoles = (user) => {
 
-
-    const isApproved =true;
-   // const isApproved = (user.status === "APPROVED")
-
-    //let role = user.role;
+    const isApproved = true;
     const isUser = true;
-   // const isUser = (role === "USER")
 
 
-
-    return {isUser,isApproved}
+    return {isUser, isApproved}
 }
 
 export const initialState = {
-    isLoggedIn:false,
-    token:null,
-    user:null,
-    roles:getDefaultRoles()
+    isLoggedIn: false,
+    token: null,
+    user: null,
+    roles: getDefaultRoles()
 }
 
 
-const loginUser =(state,action)=>{
+const loginUser = (state, action) => {
 
     let updatedState = {}
-    if(action?.payload){
-        const roles =getApplicableRoles(action.payload)
-        updatedState={isLoggedIn:true,token:action.payload.accessToken,user:action.payload,roles}
+    if (action?.payload) {
+        const roles = getApplicableRoles(action.payload)
+        updatedState = {isLoggedIn: true, token: action.payload.accessToken, user: action.payload, roles}
     }
-    return { ...state,...updatedState}
-
+    return {...state, ...updatedState}
 
 
 };
-const logOutUser =(state,action)=>{
+const logOutUser = (state, action) => {
 
-    console.log("logOutUser reducer","logout reducer")
+    console.log("logOutUser reducer", "logout reducer")
 
-    return { ...state,isLoggedIn:false,token:null,user:null,roles:getDefaultRoles()}
+    return {...state, isLoggedIn: false, token: null, user: null, roles: getDefaultRoles()}
 
 };
-const rehydrateApp =(state,action)=>{
+const rehydrateApp = (state, action) => {
 
-    if(action?.payload?.auth?.user){
+    if (action?.payload?.auth?.user) {
         let {auth} = action.payload;
-        let {user,token} = auth
+        let {user, token} = auth
         setAuthToken(token)
-        const roles =getApplicableRoles(user)
+        const roles = getApplicableRoles(user)
 
-        return { ...state,isLoggedIn:true,token:token,user:user,roles}
-    }else {
+        return {...state, isLoggedIn: true, token: token, user: user, roles}
+    } else {
         return {...state}
     }
 
@@ -69,13 +61,10 @@ const rehydrateApp =(state,action)=>{
 };
 
 
-
-
 const authReducer = createReducer(initialState, {
     [LOGIN]: loginUser,
-    [REHYDRATE]:rehydrateApp,
+    [REHYDRATE]: rehydrateApp,
     [LOGOUT]: logOutUser
-
 
 
 });
